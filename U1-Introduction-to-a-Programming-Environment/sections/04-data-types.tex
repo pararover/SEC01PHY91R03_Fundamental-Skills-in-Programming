@@ -1,0 +1,216 @@
+\section{Data types}
+
+	\subsection{Numerical data}
+		Although modern machines commonly offer abundant memory and a 64-bit architecture, allocating the full 64 bits to every value (for example storing the small integer 0) is often wasteful; Scilab will by default manage data representation automatically, but this can lead to inefficiencies if the widest type is used indiscriminately. Consequently, the developer may either rely on Scilab's automatic choice or explicitly declare more appropriate data types (for example single precision or integer types) where suitable; used judiciously, explicit typing reduces memory consumption and can improve execution speed, while careless use of wide types increases both memory requirements and computational overhead.
+		
+		\renewcommand{\arraystretch}{1.5}
+		\begin{table}[!htb]
+			\centering
+			\caption{Numeric datatypes for integers along with precision}
+			\label{tab:num-data-types}
+			\begin{tabular}{lll}
+				\toprule[1.5pt]
+				\textbf{Data type} & \textbf{Meaning} & \textbf{Range} \\
+				\midrule[1.2pt]
+				\texttt{int8} & {Signed 8-bit integer} & {$\qty[-2^7,2^7-1]$} \\
+				\texttt{uint8} & {Unsigned 8-bit integer} & {$\qty[0,2^8-1]$} \\
+				\texttt{int16} & {Signed 16-bit integer} & {$\qty[-2^{15},2^{15}-1]$} \\
+				\texttt{uint16} & {Unsigned 16-bit integer} & {$\qty[0,2^{16}-1]$} \\
+				\texttt{int32} & {Signed 32-bit integer} & {$\qty[-2^{31},2^{31}-1]$} \\
+				\texttt{uint32} & {Unsigned 32-bit integer} & {$\qty[0,2^{32}-1]$} \\
+				\texttt{int64} & {Signed 64-bit integer} & {$\qty[-2^{63},2^{63}-1]$} \\
+				\texttt{uint64} & {Unsigned 64-bit integer} & {$\qty[0,2^{64}-1]$} \\
+				\bottomrule[1.5pt]
+			\end{tabular}
+		\end{table}
+		
+		The limits of the data types given in table \ref{tab:num-data-types} can be tested as follows:
+		\begin{multicols}{2}
+		\begin{verbatim}
+			--> int16(2^15)
+			ans = [int16]
+			-32768
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> int16(2^15-1)
+			ans = [int16]
+			32767
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> uint16(2^16-1)
+			ans = [uint16]
+			65535
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> uint16(2^16)
+			ans = [uint16]
+			0
+		\end{verbatim}
+		\end{multicols}
+		
+		A floating-point number is represented in the following normalized form:
+		\begin{align*}
+			(-1)^SM\times B^E
+		\end{align*}
+		where $S$ is the \textit{sign}, $M$ is the \textit{mantissa}, $B$ is the \textit{base} and $E$ is the \textit{exponent}. Each of these components occupies specific bit-fields in memory, and the total number of bits used to represent the value is referred to as its precision. Scilab supports several floating-point precisions (listed in table \ref{tab:float-precision}), and understanding how sign, mantissa and exponent are allocated helps explain rounding behaviour, range and storage cost for numerical values.
+		
+		\begin{table}[!htb]
+			\centering
+			\caption{Precisions available for floating point numbers}
+			\label{tab:float-precision}
+			\begin{tabular}{lcc}
+				\toprule[1.5pt]
+				\textbf{Precision} & \textbf{Bits occupied} & \textbf{Bytes allocated} \\
+				\midrule[1.2pt]
+				{Single} & {32} & {4} \\
+				{Double} & {64} & {8} \\
+				{Extended double} & {80} & {10} \\
+				{Quadruple} & {128} & {16} \\
+				\bottomrule[1.5pt]
+			\end{tabular}
+		\end{table}
+		
+		On a 64-bit system running Scilab, real (floating-point) variables are typically represented using 64 bits in the IEEE 754 double-precision format -- hence the data type name \texttt{double} -- which provides a wide dynamic range and sufficient precision for most scientific computations. This format includes the following:
+		\begin{itemize}
+			\item 1 bit to store the sign $S$, i.e. $2^1=2$ possible values (0 for $+$, 1 for $-$).
+			\item 52 bits to store the mantissa $M$, i.e. $2^{52}=4.5\times 10^{15}$ possible values.
+			\item 11 bits to store the exponent $E$, i.e. $2^{11}=2048$ possible values.
+		\end{itemize}
+		
+		\paragraph{Formatted display of numerical data:} Scilab provides two complementary ways to control how numeric results appear: a \textit{global display format} that governs the default printing of numbers at the prompt, and \textit{explicit format strings} for precise control when producing output to the console or to files. Use the global format for convenient, interactive inspection and use the explicit format functions when exact field widths, number of digits or layout are required.
+		\begin{enumerate}
+			\item \textit{Global display format}: The \texttt{format} function sets the default way Scilab prints decimal numbers at the prompt and in functions such as \texttt{disp}. It supports a \textit{mode} (for example a variable/default `v' mode or an exponential `e' mode) and a \textit{width} (the number of output characters used, all included: sign of the mantissa, its digits, decimal separator, exponent symbol, sign and digits of the exponent).
+			
+			The call forms include \texttt{format(mode)}, \texttt{format(width)}, and \texttt{format(mode, width)}, and \texttt{format()} returns the current settings. Changing the global format is convenient for interactive work when one wants more or fewer significant digits without rewriting print statements.
+			\begin{verbatim}
+	--> pi = 22/7;
+	
+	--> disp(pi)
+	3.1428571
+	
+	--> format("v",6)
+	
+	--> disp(pi)
+	3.143
+	
+	--> format("e",10)
+	
+	--> disp(pi)
+	3.143D+00
+			\end{verbatim}
+			
+			\item \textit{Explicit format strings}: For formatted output (tables, reports, iteration logs, files), Scilab implements C-style conversion specifiers via \texttt{mprintf} (console), \texttt{mfprintf} (file) and \texttt{msprintf} (return a string). These functions accept format strings containing conversion specifiers such as \texttt{\%f}, \texttt{\%e}, \texttt{\%g}, and allow specifying field width, precision and numbered placeholders.
+		\end{enumerate}
+		
+	\subsection{Boolean data}
+		Boolean data is assigned to variables using either \texttt{\%T} (for \textit{true}) or \texttt{\%F} (for \textit{false}).
+        \begin{verbatim}
+	--> a = %T
+	 a =
+	  T
+		\end{verbatim}
+		Boolean variables must be operated using boolean operators which are the following:
+		\begin{itemize}
+			\item \texttt{NOT} -- represented by the symbolic operator \texttt{\~{}}
+			\begin{verbatim}
+	--> b = ~a    
+	 b = 
+	  F
+			\end{verbatim}
+			
+			\item \texttt{AND} -- represented by the symbolic operator \texttt{\&}
+			\begin{verbatim}
+	--> a & b
+	 ans =
+	  F
+			\end{verbatim}
+			
+			\item \texttt{OR} -- represented by the symbolic operator \texttt{|}
+			\begin{verbatim}
+	--> a | b
+	 ans =
+	  T
+			\end{verbatim}
+		\end{itemize}
+		
+	\subsection{Strings}
+		Alphabets along with special characters are treated as string data types. String variable and values can be concatenated using the \texttt{$+$} operator.
+		\begin{verbatim}
+	--> s1 = "Hello";
+	
+	--> s2 = "world";
+	
+	--> s = s1 + s2    
+	 s =     
+	  "Helloworld"
+	
+	--> s = s1 + ", " + s2 + "!"    
+	 s =     
+	  "Hello, world!"
+		\end{verbatim}
+		
+		The built-in function \texttt{string()} converts a given value to string data type. As shown in the following example, the numerical value $2$ is converted to a string data type when the \texttt{string()} function is applied to it.
+		\begin{verbatim}
+	--> a = 2
+	 a =     
+	  2.
+			
+	--> s = string(a)    
+	 s =     
+	  "2"
+		\end{verbatim}
+		One can now concatenate the string format of ``2'' with another number using the \texttt{$+$} operator.
+		\begin{verbatim}
+	--> t = string(5)    
+	 t =     
+	  "5"
+			
+	--> s + t    
+	 ans =     
+	  "25"
+		\end{verbatim}
+		
+	\subsection{Complex numbers}
+		Scilab supports complex numbers as a separate numeric type, using the imaginary unit \texttt{\%i} (also available as the shorthand \texttt{1i} or \texttt{1j}) so that expressions such as \texttt{2 + 3*\%i} or \texttt{2 + 3i} represent the complex number $2+3i$.
+		\begin{multicols}{2}
+		\begin{verbatim}
+	--> %i
+	 %i =
+	  0. + i
+	
+	--> 1i
+	 ans =
+	  0. + i
+	
+	--> 2 + 3*%i
+	 ans =
+	  2. + 3.i
+	
+	--> 2 + 3i
+	 ans =
+	  2. + 3.i
+		\end{verbatim}
+		\end{multicols}
+		
+		Complex numbers can also be created from separate real and imaginary parts with the constructor \texttt{complex(a,b)}, which is particularly convenient for arrays.
+		\begin{verbatim}
+	--> z = complex(4, -5)
+	 z =     
+	  4. - 5.i
+		\end{verbatim}
+		
+		The real and imaginary parts of a complex number can be extracted using the \texttt{real()} and \texttt{imag()} functions respectively.
+		\begin{multicols}{2}
+		\begin{verbatim}
+	--> real(z)
+	 ans =
+	  4.
+	
+	--> imag(z)
+	 ans =
+	  -5.
+		\end{verbatim}
+		\end{multicols}

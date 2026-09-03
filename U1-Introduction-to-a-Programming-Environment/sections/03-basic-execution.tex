@@ -2,3 +2,122 @@
 
 	\subsection{Arithmetic expressions}
 		Scilab can be used as a simple calculator to perform numerical calculations. Some of such examples are given below.
+		\begin{multicols}{2}
+		\begin{verbatim}
+			--> 7 + 6
+			ans = 
+			13.
+		\end{verbatim}
+			
+		\begin{verbatim}
+			--> 9 / 17
+			ans = 
+			0.5294118
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> 4 * 16
+			ans = 
+			64.
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> sin(0.4156)
+			ans = 
+			0.4037389
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> acos(0.707)
+			ans = 
+			0.7855492
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> exp(2.349)
+			ans = 
+			10.475089
+		\end{verbatim}
+		\end{multicols}
+		
+		When Scilab evaluates an expression it stores the result in a variable so it can be used by subsequent statements; if the user does not explicitly assign a name, Scilab places the result in the built-in variable \texttt{ans}, whereas if the user provides an assignment the value is stored in that named variable instead, so explicit assignments are recommended when a value must be retained.
+		
+	\subsection{Variable assignments}
+		Scilab allows the user to define variables and assign values to them so that they can be used later.
+		\begin{multicols}{2}
+		\begin{verbatim}
+			--> a = 3.4;
+			--> b = 6.78;
+			--> c = a + b
+			c =
+			10.18
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> x = 13;
+			--> z = x .^ 2
+			z =
+			169.
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> w = exp(0.1);
+			--> v = 2;
+			--> u = w .^ v
+			u =
+			1.2214028
+		\end{verbatim}
+		
+		\begin{verbatim}
+			--> pi = atan(1.0)*4;
+			--> y = sin(pi/4)
+			y =
+			0.7071068
+		\end{verbatim}
+		\end{multicols}
+		
+	\subsection{Managing output display}
+		\begin{itemize}
+			\item Appending a semicolon ( \texttt{;} ) to an expression in Scilab suppresses the output echo -- the expression is still evaluated and any assignment performed, but the resulting value is not printed in the console, which is useful for reducing clutter when running scripts or storing intermediate results.
+			
+			\item Multiple commands may be placed on a single line by separating them with either a semicolon ( \texttt{;} ) or a comma ( \texttt{,} ). Both delimiters allow successive statements to be evaluated and any assignments to occur, but a trailing or intervening semicolon suppresses the echo of intermediate results whereas a comma causes each result to be printed. So a semi-colon is useful for keeping the console uncluttered when running sequences of commands and a comma is convenient when the user wishes to inspect intermediate outputs.
+			\begin{multicols}{2}
+\begin{verbatim}
+	--> a = 55; b = 16; c = 21;
+	--> disp([a b c])
+	55.   16.   21.
+	
+	
+	
+	
+	
+	
+\end{verbatim}
+
+\begin{verbatim}
+	--> a = 55, b = 16, c = 21,
+	a =
+	55.
+	b =
+	16.
+	c =
+	21.
+	--> disp([a b c])
+	55.   16.   21.
+\end{verbatim}
+			\end{multicols}
+			
+			\item Semicolons and commas may be mixed on the same line: any expression terminated with a semicolon ( \texttt{;} ) is evaluated (and any assignment performed) without printing its value, whereas an expression terminated with a comma ( \texttt{,} ) is evaluated and its result is echoed to the console.
+\begin{verbatim}
+	--> x = 150; y = 213, z = 574;
+	y =
+	213.
+\end{verbatim}
+			\item To change the font on the console window or on SciNotes, click \texttt{Edit} $\rightarrow$ \texttt{Preferences}. Then click on \texttt{Fonts} on the left panel.
+			
+			One can then uncheck the `\texttt{Use system font}' option and proceed to select the desired font typeface.
+			
+			Under `\texttt{Custom font}' one can then select either \texttt{Console} or \texttt{Scinotes} and choose \texttt{Desktop text font} under `\texttt{Fonts to use}'. Finally click on \texttt{Apply} and then on \texttt{OK} to change to the desired font.
+			
+			\item In order to clear the console window, one can either execute the \texttt{clc} (which stands for \textit{\textbf{cl}ear \textbf{c}onsole}) or simply press the F2 key.
+		\end{itemize}
