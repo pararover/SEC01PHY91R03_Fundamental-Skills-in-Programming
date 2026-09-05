@@ -42,7 +42,7 @@
 		
 		When Scilab evaluates an expression it stores the result in a variable so it can be used by subsequent statements; if the user does not explicitly assign a name, Scilab places the result in the built-in variable \texttt{ans}, whereas if the user provides an assignment the value is stored in that named variable instead, so explicit assignments are recommended when a value must be retained.
 		
-	\subsection{Variable assignments}
+	\subsection{Variable assignments} \label{ssec:variable-assignment}
 		Scilab allows the user to define variables and assign values to them so that they can be used later.
 		\begin{multicols}{2}
 		\begin{verbatim}
@@ -55,9 +55,9 @@
 		
 		\begin{verbatim}
 			--> x = 13;
-			--> z = x .^ 2
+			--> z = x .* 2
 			z =
-			169.
+			26.
 		\end{verbatim}
 		
 		\begin{verbatim}

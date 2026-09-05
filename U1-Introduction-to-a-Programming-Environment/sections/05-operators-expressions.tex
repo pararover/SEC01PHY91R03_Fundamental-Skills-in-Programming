@@ -1,5 +1,90 @@
 \section{Operators and expressions}
+	Having looked at the data types Scilab works with, we now look at the operators that combine them into expressions. Scilab's operator set will look familiar to anyone who has used a calculator, but a few of its precedence and associativity rules are genuinely unusual.
 
-	\subsection{Types of operators}
+	\subsection{Arithmetic operators}
+		\begin{table}[h!]
+			\centering
+			\begin{tabular}{cccc}
+				\toprule[1.5pt]
+				{\textbf{Operator}} & {\textbf{Operation}} & {\textbf{Example}} & {\textbf{Result}} \\
+				\midrule
+				{\verb|+|} & {Addition} & {\verb|5 + 3|} & {\verb|8.|} \\
+				{\verb|-|} & {Subtraction} & {\verb|5 - 3|} & {\verb|2.|} \\
+				{\verb|*|} & {Multiplication} & {\verb|5 * 3|} & {\verb|15.|} \\
+				{\verb|/|} & {Right division} & {\verb|4 / 2|} & {\verb|2.|} \\
+				{\verb|\|} & {Left division} & {\verb|4 \ 2|} & {\verb|0.5|} \\
+				{\verb|^|} & {Exponentiation} & {\verb|2 ^ 5|} & {\verb|32.|} \\
+				\bottomrule[1.5pt]
+			\end{tabular}
+		\end{table}
+		
+		\begin{itemize}
+			\item In case of scalars, when we write \verb|a \ b|, it means when ``\verb|b| is divided by \verb|a|'', i.e. \verb|a \ b| is the same as \verb|b / a|. However, in the case of arrays and matrices (e.g. solving a system of linear equations), \verb|A \ b| is not the same as \verb|b / A|.
+			
+			\item In section \ref{ssec:variable-assignment}, we had written expressions such as \verb|z = x .* 2| and \verb|u = w .^ v|. In case of scalars, writing \verb|.*| is identical to writing \verb|*|, and so on. The difference arises later once we start operating on vectors and matrices. Then the dot (\verb|.|) preceding the operator implies element-by-element operations between vectors and/or matrices.
+		\end{itemize}
 	
-	\subsection{Expression rules}
+	\subsection{Relational operators}
+		\begin{table}[h!]
+			\centering
+			\begin{tabular}{cccc}
+				\toprule[1.5pt]
+				{\textbf{Operator}} & {\textbf{Operation}} & {\textbf{Example}} & {\textbf{Result}} \\
+				\midrule
+				{\verb|==|} & {Equal to} & {\verb|7 == 5|} & {\verb|F|} \\
+				{\verb|~=| or \verb|<>|} & {Not equal to} & {\verb|8 ~= 9| or \verb|8 <> 9|} & {\verb|T|} \\
+				{\verb|<|} & {Less than} & {\verb|9 < 9|} & {\verb|F|} \\
+				{\verb|<=|} & {Less than or equal to} & {\verb|9 <= 9|} & {\verb|T|} \\
+				{\verb|>|} & {Greater than} & {\verb|6 > 4|} & {\verb|T|} \\
+				{\verb|>=|} & {Greater than or equal to} & {\verb|6 >= 4|} & {\verb|T|} \\
+				\bottomrule[1.5pt]
+			\end{tabular}
+		\end{table}
+		
+		\begin{itemize}
+			\item The result of a relational operator is always boolean, i.e. \verb|F| implies `false' and \verb|T| implies `true'.
+			
+			\item Both \verb|~=| and \verb|<>| are two versions of the same operator. Scilab keeps both for historical reasons and it does not matter which is used, though it is good practice to pick one and use it consistently within a script.
+		\end{itemize}
+	
+	\subsection{Logical operators}
+		In section \ref{ssec:boolean-data}, three logical operators \verb|&| (\texttt{AND}), \texttt{|} (\texttt{OR}) and \verb|~| (\texttt{NOT}) were introduced, which operate on boolean data. We can use them to build compound conditions out of relational expressions.
+		\begin{multicols}{2}
+			\begin{verbatim}
+	--> temp = 305;
+	--> pres = 1.2;
+	--> (temp > 273) & (pres <= 1.5)	
+	 ans =
+	  T
+			\end{verbatim}
+			
+			\begin{verbatim}
+	--> temp = 305;
+	--> pres = 1.2;
+	--> (temp < 273) | (pres <= 1.5)
+	 ans =
+	  T
+			\end{verbatim}
+		\end{multicols}
+		
+	\subsection{Operator precedence and associativity}
+		Scilab's own documentation does not print a single consolidated precedence table anywhere. These rules have to be pieced together from the documentation of individual operators, or determined empirically. The following ordering (highest precedence first) is sufficient for every expression one is likely to write.
+		\begin{table}[h!]
+			\centering
+			\begin{tabular}{cll}
+				\toprule[1.5pt]
+				{\textbf{Precedence}} & {\textbf{Operation}} & {\textbf{Operators}} \\
+				\midrule
+				{1 (highest)} & {Parentheses} & {\verb|( )|} \\ \hline
+				{2} & {Transpose} & {\verb|'| and \verb|.'|} \\
+				{ } & {Power} & {\verb|^| and \verb|.^|} \\ \hline
+				{3} & {Multiplication} & {\verb|*| and \verb|.*|} \\
+				{ } & {Division} & {\verb|/| and \verb|./|; \verb|\| and \verb|.\|} \\ \hline
+				{4} & {Addition} & {\verb|+| and \verb|.+|} \\
+				{ } & {Subtraction} & {\verb|-| and \verb|.-|} \\ \hline
+				{5} & {Relational operations} & {\verb|==|, \verb|~=|, \verb|<>|, \verb|<|, \verb|<=|, \verb|>|, \verb|>=|} \\ \hline
+				{6} & {Logical \verb|AND|} & {\verb|&|} \\ \hline
+				{7 (lowest)} & {Logical \verb|OR|} & {\texttt{|}} \\
+				\bottomrule[1.5pt]
+			\end{tabular}
+		\end{table}
