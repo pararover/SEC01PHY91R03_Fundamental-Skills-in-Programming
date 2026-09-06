@@ -7,12 +7,12 @@
 			\begin{tabular}{cccc}
 				\toprule[1.5pt]
 				{\textbf{Operator}} & {\textbf{Operation}} & {\textbf{Example}} & {\textbf{Result}} \\
-				\midrule
-				{\verb|+|} & {Addition} & {\verb|5 + 3|} & {\verb|8.|} \\
-				{\verb|-|} & {Subtraction} & {\verb|5 - 3|} & {\verb|2.|} \\
-				{\verb|*|} & {Multiplication} & {\verb|5 * 3|} & {\verb|15.|} \\
-				{\verb|/|} & {Right division} & {\verb|4 / 2|} & {\verb|2.|} \\
-				{\verb|\|} & {Left division} & {\verb|4 \ 2|} & {\verb|0.5|} \\
+				\midrule[1.2pt]
+				{\verb|+|} & {Addition} & {\verb|5 + 3|} & {\verb|8.|} \\ \hline
+				{\verb|-|} & {Subtraction} & {\verb|5 - 3|} & {\verb|2.|} \\ \hline
+				{\verb|*|} & {Multiplication} & {\verb|5 * 3|} & {\verb|15.|} \\ \hline
+				{\verb|/|} & {Right division} & {\verb|4 / 2|} & {\verb|2.|} \\ \hline
+				{\verb|\|} & {Left division} & {\verb|4 \ 2|} & {\verb|0.5|} \\ \hline
 				{\verb|^|} & {Exponentiation} & {\verb|2 ^ 5|} & {\verb|32.|} \\
 				\bottomrule[1.5pt]
 			\end{tabular}
@@ -30,12 +30,12 @@
 			\begin{tabular}{cccc}
 				\toprule[1.5pt]
 				{\textbf{Operator}} & {\textbf{Operation}} & {\textbf{Example}} & {\textbf{Result}} \\
-				\midrule
-				{\verb|==|} & {Equal to} & {\verb|7 == 5|} & {\verb|F|} \\
-				{\verb|~=| or \verb|<>|} & {Not equal to} & {\verb|8 ~= 9| or \verb|8 <> 9|} & {\verb|T|} \\
-				{\verb|<|} & {Less than} & {\verb|9 < 9|} & {\verb|F|} \\
-				{\verb|<=|} & {Less than or equal to} & {\verb|9 <= 9|} & {\verb|T|} \\
-				{\verb|>|} & {Greater than} & {\verb|6 > 4|} & {\verb|T|} \\
+				\midrule[1.2pt]
+				{\verb|==|} & {Equal to} & {\verb|7 == 5|} & {\verb|F|} \\ \hline
+				{\verb|~=| or \verb|<>|} & {Not equal to} & {\verb|8 ~= 9| or \verb|8 <> 9|} & {\verb|T|} \\ \hline
+				{\verb|<|} & {Less than} & {\verb|9 < 9|} & {\verb|F|} \\ \hline
+				{\verb|<=|} & {Less than or equal to} & {\verb|9 <= 9|} & {\verb|T|} \\ \hline
+				{\verb|>|} & {Greater than} & {\verb|6 > 4|} & {\verb|T|} \\ \hline
 				{\verb|>=|} & {Greater than or equal to} & {\verb|6 >= 4|} & {\verb|T|} \\
 				\bottomrule[1.5pt]
 			\end{tabular}
@@ -71,20 +71,23 @@
 		Scilab's own documentation does not print a single consolidated precedence table anywhere. These rules have to be pieced together from the documentation of individual operators, or determined empirically. The following ordering (highest precedence first) is sufficient for every expression one is likely to write.
 		\begin{table}[h!]
 			\centering
-			\begin{tabular}{cll}
+			\begin{tabular}{ccc}
 				\toprule[1.5pt]
 				{\textbf{Precedence}} & {\textbf{Operation}} & {\textbf{Operators}} \\
-				\midrule
+				\midrule[1.2pt]
 				{1 (highest)} & {Parentheses} & {\verb|( )|} \\ \hline
-				{2} & {Transpose} & {\verb|'| and \verb|.'|} \\
-				{ } & {Power} & {\verb|^| and \verb|.^|} \\ \hline
-				{3} & {Multiplication} & {\verb|*| and \verb|.*|} \\
-				{ } & {Division} & {\verb|/| and \verb|./|; \verb|\| and \verb|.\|} \\ \hline
-				{4} & {Addition} & {\verb|+| and \verb|.+|} \\
-				{ } & {Subtraction} & {\verb|-| and \verb|.-|} \\ \hline
-				{5} & {Relational operations} & {\verb|==|, \verb|~=|, \verb|<>|, \verb|<|, \verb|<=|, \verb|>|, \verb|>=|} \\ \hline
-				{6} & {Logical \verb|AND|} & {\verb|&|} \\ \hline
-				{7 (lowest)} & {Logical \verb|OR|} & {\texttt{|}} \\
+				{2} & {Transpose} & {\verb|'| or \verb|.'|} \\
+				{ } & {Power} & {\verb|^| or \verb|.^|} \\ \hline
+				{3} & {Multiplication} & {\verb|*| or \verb|.*|} \\
+				{ } & {Division} & {\verb|/| or \verb|./| and \verb|\| or \verb|.\|} \\ \hline
+				{4} & {Addition} & {\verb|+| or \verb|.+|} \\
+				{ } & {Subtraction} & {\verb|-| or \verb|.-|} \\ \hline
+				{5} & {Logical \verb|NOT|} & {\verb|~|} \\ \hline
+				{6} & {Relational operations} & {\verb|==|, \verb|~=|, \verb|<>|, \verb|<|, \verb|<=|, \verb|>|, \verb|>=|} \\ \hline
+				{7} & {Logical \verb|AND|} & {\verb|&|} \\ \hline
+				{8 (lowest)} & {Logical \verb|OR|} & {\texttt{|}} \\
 				\bottomrule[1.5pt]
 			\end{tabular}
 		\end{table}
+		
+		\textbf{Note:} When in doubt about how an expression will be interpreted by Scilab, parenthesise it explicitly. Even though precedence rules exist so that one rarely has to use parentheses, they do not mean one should never use them for clarity.

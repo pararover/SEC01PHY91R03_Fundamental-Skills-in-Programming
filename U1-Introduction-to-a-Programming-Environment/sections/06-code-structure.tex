@@ -1,5 +1,98 @@
 \section{Code structure and readability}
+	A script that Scilab can execute correctly is not the same thing as a script that a human being can read correctly. Here we discuss the conventions that regarding how to name things sensibly and how to document what a piece of code is doing and why so that is does not become unreadable.
 
-	\subsection{Readability practices}
+	\subsection{Variable naming conventions}
+		Scilab's rules for a legal variable name are as follows:
+		\begin{enumerate}[i.]
+			\item A variable name must begin with a letter or an underscore (\verb|_|).\\
+			Examples:
+			\begin{itemize}
+				\item \verb|Temperature| and \verb|_density| are allowed.
+				\item \verb|5freq| and \verb|21_dydx| are not allowed.
+			\end{itemize}
+			
+			\item A variable name may thereafter contain letters, digits and underscores.
+			\begin{itemize}
+				\item \verb|xa|, \verb|force1| and \verb|field_| are allowed.
+				\item \verb|const_@|, \verb|vol 5| are not allowed.
+			\end{itemize}
+			
+			\item A variable name is case-sensitive.
+			\begin{itemize}
+				\item \verb|vector_1| is different from \verb|Vector_1|.
+			\end{itemize}
+		\end{enumerate}
+		
+		Apart from the above rules, it is advisable to follow the conventions given below so as to ensure that one's code is readable.
+		\begin{enumerate}
+			\item Prefer descriptive names for anything that persists beyond a few lines. Single-letter names such as \verb|i|, \verb|j|, \verb|x| are fine for loop counters and short-lived scratch values, but a variable that stores a physical quantity should explicitly say so., say, a radon concentration or a decay constant 
+			\begin{itemize}
+				\item E.g. the variable name \verb|radon_conc| is more appropriate than \verb|rc| for storing the value of radon concentration.
+			\end{itemize}
+			
+			\item Choose a particular variable naming convention and adhere to it. Some of the commonly used conventions are given below.
+			\begin{itemize}
+				\item \emph{Camel case}: The first word starts with a lowercase letter, and every following word begins with a capital letter with no spaces or symbols in between. E.g. \verb|momentOfInertia|, \verb|chargeDensity| and \verb|workFunction|.
+				\item \emph{Pascal case}: Similar to camel case, but the very first word also starts with a capital letter. E.g. \verb|MomentOfInertia|, \verb|ChargeDensity| and \verb|WorkFunction|.
+				\item \emph{Snake case}: All letters are lowercase, and words are separated by an underscore (\verb|_|). E.g. \verb|moment_of_inertia|, \verb|charge_density| and \verb|work_function|.
+			\end{itemize}
+						
+			\item Avoid naming variable after built-in function names. Even though Scilab does not prevent one from doing so, it would hide the built-in function for the rest of the session.
+			\begin{itemize}
+				\item E.g. naming a variable as \verb|sum| or \verb|mean| would hide the \verb|sum()| or \verb|mean()| functions from being used.
+			\end{itemize}
+			
+			\item Avoid naming variables after protected \verb|%| constants, even though both would work. Doing so might lead to code that would be confusing later on. A list of all protected constants in Scilab is given in the table below.
+			\begin{itemize}
+				\item E.g. naming a variable as \verb|pi| is allowed and the protected \verb|%pi| constant is still accessible. But it is still poor practice to reuse a name this close to a well-known constant purely because it invites confusion when a script is read quickly.
+			\end{itemize}
+		\end{enumerate}
+		\begin{table}[h!]
+			\centering
+			\begin{tabular}{cc}
+				\toprule[1.5pt]
+				{\textbf{Constant}} & {\textbf{Meaning}} \\
+				\midrule[1.2pt]
+				{\verb|%pi|} & {Ratio of a circle's circumference to its diameter} \\ \hline
+				{\verb|%e|} & {Euler's constant, which is the base of natural logarithms} \\ \hline
+				{\verb|%eps|} & {Floating-point relative accuracy / machine precision} \\ \hline
+				{\verb|%i|} & {Imaginary unit which is equivalent to $\sqrt{-1}$} \\ \hline
+				{\verb|%inf|} & {Infinity, resulting from operations, such as \verb|1/0|} \\ \hline
+				{\verb|%nan|} & {Not-a-Number, representing an undefined or unrepresentable value} \\ \hline
+				{\verb|%t| or \verb|%T|} & {Boolean value for true state} \\ \hline
+				{\verb|%f| or \verb|%F|} & {Boolean value for false state} \\ \hline
+				{\verb|%s|} & {Special variable used to define continuous-time polynomials} \\ \hline
+				{\verb|%z|} & {Special variable used to define discrete-time polynomials} \\
+				\bottomrule[1.5pt]
+			\end{tabular}
+		\end{table}
 	
-	\subsection{Syntax rules}
+	\subsection{Using comments}
+		Inserting comments within Scilab code is important because it improves the readability of the code and integrates the documentation within the code itself. Even though using comments is not mandatory, they are immensely useful because they ensure that the purpose of the code is properly understandable.
+		
+		Scilab recognises two comment styles.\vspace{-2.0ex}
+		\begin{enumerate}
+			\item Single line comments
+			\item Block comments
+		\end{enumerate}
+		
+		\subsubsection{Single line comments}
+			These comments begin with \verb|//| from the point where the comment is required to begin. Scilab ignores everything from \verb|//| to the end of the line.
+			
+			Example:
+			\begin{verbatim}
+	// This is a full-line comment
+	x = 5; // This is an inline comment
+			\end{verbatim}
+		
+		\subsubsection{Block comments}
+			These comments begin with a \verb|/*| and end with a \verb|*/|, and Scilab ignores everything in-between. Such comments can, therefore, span multiple lines without requiring \verb|//| on each line.
+			
+			Example:
+			\begin{verbatim}
+	/* This is a comment block
+	that spans across
+	multiple lines */
+			\end{verbatim}
+	
+	%\subsection{Breaking long expressions}
