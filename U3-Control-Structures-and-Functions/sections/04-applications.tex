@@ -1,0 +1,40 @@
+\section{Applications}
+
+	\subsection{Series sums}
+		\begin{enumerate}[\bf E.g. 1:]
+			\item Write a Scilab function \verb|harmonic_sum(n)| that returns the sum
+			\begin{align*}
+				1+\dfrac{1}{2}+\dfrac{1}{3}+\cdots+\dfrac{1}{n}
+			\end{align*}
+			\textit{Solution:} We have to create a \code{.sci} file which can be later executed in the console window.
+			\begin{enumerate}[I.]
+				\item Contents of the \verb|harmonic_sum.sci| file:
+				\lstinputlisting[language=Scilab]{code/harmonic_sum.sci}
+				
+				\item Execution on the console window:
+				\begin{lstlisting}[language=Scilab]
+					--> exec('harmonic_sum.sci', -1);
+					--> harmonic_sum(15)
+					ans = 
+					3.3182290
+				\end{lstlisting}
+			\end{enumerate}
+			
+			\item Write a Scilab function \verb|newton_root(f, df, x0, tol, max_iter)| that implements the Newton-Raphson method to find a root of a function $f(x)$. Provide the function header and the essential loop (concise, runnable code), and briefly state two stopping criteria used in your implementation.
+			
+			\textit{Solution:} We have to create a \code{.sci} file which can be later executed in the console window.
+			\begin{enumerate}[I.]
+				\item Contents of the \verb|newton_root.sci| file:
+				\lstinputlisting[language=Scilab]{code/newton_root.sci}
+				
+				\item Execution on the console window:
+				\begin{lstlisting}[language=Scilab]
+					--> exec('newton_root.sci', -1);
+					--> deff('y=f1(x)', 'y = x^2 - 2');
+					--> deff('y=df1(x)', 'y = 2*x');
+					--> [root1, it1, conv1] = newton_root(f1, df1, 1.0, 1e-12, 50);
+					--> mprintf('Test1: root = %.12f, iter = %d, converged = %d\n', root1, it1, conv1);
+					Test1: root = 1.414213562373, iter = 6, converged = 1
+				\end{lstlisting}
+			\end{enumerate}
+		\end{enumerate}

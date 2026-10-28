@@ -1,0 +1,67 @@
+\section{Functions in Scilab}
+	Functions are the primary mechanism for packaging behaviour into named, reusable units. They let a program encapsulate a computation, hide implementation details and present a simple interface to callers. Well-designed functions improve readability, make testing easier and are the cornerstone of modular programming and code reuse. 
+	
+	In Scilab a function has its own local workspace so variables inside it do not collide with variables in the caller unless explicitly declared global.
+	
+	\subsection{Function definition} \label{ssec:func-defn}
+		A Scilab function is declared with the \code{function ... endfunction} block. The outputs are listed on the left-hand side and inputs in parentheses on the right. Functions may return multiple outputs and may be saved in a \code{.sci} file (one function per file is a common organisation) or placed at the end of a script. Inside the function body all variables are local by default, i.e. these variables exist only for the duration of the function call.
+		
+		The general syntax of a function definition is as follows:
+		\begin{verbatim}
+	function [out1, out2] = fname(in1, in2)
+	// body: compute out1 and out2 from in1 and in2
+	endfunction
+		\end{verbatim}
+		
+		\textbf{Example:} \textit{to compute the sum and product of two numbers with a single function}
+		\begin{verbatim}
+	function [s, p] = sumprod(a, b)
+	s = a + b;
+	p = a * b;
+	endfunction
+		\end{verbatim}
+	
+	\subsection{Function calling}
+		Calling a function uses its name and passing arguments in order (positional calling). The caller can request one or more outputs; Scilab will return the outputs listed by the function, and unrequested outputs are simply ignored. If a function is defined in a separate \code{.sci} file, we save that file in the current directory or add its folder to Scilab's path so the interpreter can find it. It is always preferred to have meaningful variable names at the call site so the intent of each argument is clear.
+		
+		The general syntax of a function call is as follows:
+		\begin{verbatim}
+	[out1, out2] = fname(arg1, arg2);
+		\end{verbatim}
+		
+		\textbf{Example:} The function defined in the example in \S \ref{ssec:func-defn} can be called as follows:
+		\begin{verbatim}
+	[s, p] = sumprod(3, 4);
+		\end{verbatim}
+	
+	\subsection{Passing arguments to functions}
+		Arguments in Scilab are passed by value in the language semantics; for large arrays Scilab uses internal optimisations (copy-on-write) so passing large data is efficient until a modification occurs inside the function. Inputs may be scalars, vectors, matrices or other Scilab objects. Functions should validate input sizes and types and provide helpful error messages.
+
+	\subsection{Returning values from functions}
+		A function can return multiple values by listing them in square brackets on the left-hand side of the function line. The caller receives those outputs in the same order; if the caller asks for fewer outputs, the remaining outputs are ignored. Document the meaning, shape and units (if any) of each output in the function header so callers know what to expect.
+		
+		The general syntax for returning value from functions is as follows:
+		\begin{verbatim}
+	function [out1, out2] = fname(in1)
+	// compute out1 and out2
+	endfunction
+	
+	// caller
+	[a, b] = fname(x);
+		\end{verbatim}
+		
+		\textbf{Example:} 
+		\begin{verbatim}
+	function [rho, theta, phi] = cart2sph(x, y, z)
+	rho = sqrt(x.^2 + y.^2 + z.^2);
+	if rho == 0 then
+	theta = 0; phi = 0; return;
+	end
+	theta = acos(z / rho);
+	phi = atan(y, x);  // two-argument form handles quadrants
+	endfunction
+	
+	[r, th, ph] = cart2sph(1, 1, 1);
+		\end{verbatim}
+
+%\subsection{Functions as implementation of modular programming and code reuse}

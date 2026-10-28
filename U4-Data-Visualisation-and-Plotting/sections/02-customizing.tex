@@ -1,0 +1,49 @@
+\section{Customizing plots}
+	Customising plot appearance helps communicate data clearly. We can choose sensible line styles, markers and colours so that different series are easy to distinguish, and combine datasets thoughtfully when we want to compare or join results. Scilab gives flexible, scriptable control over these details, either by plotting several \code{(x,y)} pairs together or by modifying graphics object properties returned by \code{plot()}.
+	
+	\subsection{Markers and line styles}
+		Plot markers (symbols at data points) and line styles (solid, dashed, dotted, etc.) make individual traces easy to identify and read. Use markers when showing discrete samples and use different line styles (and thicknesses) when curves might overlap; combine these with a legend so readers can tell traces apart.
+		
+		\textbf{Example:}
+		\begin{lstlisting}[language=Scilab]
+	x = 0:0.1:2*%pi;
+	y1 = sin(x);
+	y2 = sin(2*x);
+	ax1 = plot(x, y1, 'b');
+	ax2 = plot(x, y2, 'r');
+	title('Sine waves');
+	xlabel('x (rad)');
+	ylabel('f(x)');
+	legend('f(x)=sin(x)', 'f(x)=sin(2x)');
+	set(ax1, 'line_style', 1, 'thickness', 2, 'mark_style', 0);
+	set(ax2, 'line_style', 5, 'thickness', 1, 'mark_style', 4, 'mark_size', 3);
+		\end{lstlisting}
+	
+	\subsection{Multiple plots}
+		Multiple-plot techniques lets us compare datasets on the same axes or present several subplots. Two common tasks are overlaying different curves on the same axes and combining datasets (stitching or stacking) for continuous visualisation or joint analysis.
+	
+	\subsubsection*{Overlaying curves}
+		Overlaying means showing two or more curves on the same set of axes so they can be compared directly. The simplest and most robust way is to supply all \code{(x,y)} pairs to a single \code{plot()} call.
+		
+		\textbf{Example:} \textit{Overlaying two curves}
+		\begin{lstlisting}[language=Scilab]
+	x1 = 0:0.01:1;
+	y1 = sin(2*%pi*x1);
+	x2 = 1.1:0.01:2;
+	y2 = 0.5*sin(4*%pi*(x2-1.1));
+	plot(x1, y1, x2, y2);
+		\end{lstlisting}
+	
+	\subsubsection*{Combining datasets}
+		Combining datasets can mean either concatenating two segments of a timeseries for a continuous plot or arranging data side-by-side for comparison. For a continuous (piecewise) plot, we concatenate the \code{x} and \code{y} vectors; for side-by-side comparison, we plot the separate series together and use distinct styles.
+		
+		\textbf{Example:} \textit{Stitching two datasets}
+		\begin{lstlisting}[language=Scilab]
+	x1 = 0:0.01:1;
+	y1 = sin(2*%pi*x1);
+	x2 = 1.1:0.01:2;
+	y2 = 0.5*sin(4*%pi*(x2-1.1));
+	x_all = [x1, x2];
+	y_all = [y1, y2];
+	plot(x_all, y_all);
+		\end{lstlisting}

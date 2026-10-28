@@ -1,0 +1,30 @@
+\section{Applications}
+	Applications of simple mechanical models provide immediate insight into oscillations, energy landscapes and dissipative behaviour encountered across physics and engineering. The plots and short scripts below illustrate three common topics: ideal (undamped) oscillatory motion which highlights sinusoidal time-dependence and frequency, damping curves that show how dissipation changes amplitude and introduces decay rates (underdamped, critically damped and overdamped cases), and potential-well profiles that visualise the forces and equilibrium points experienced by a particle.
+	
+	\subsection{Oscillatory motion}
+		Given below is the analytic solution of the simple harmonic oscillator:
+		\begin{align*}
+			x(t)=A\cos{\qty(\omega t+\phi)}
+		\end{align*}
+		The Scilab code below plots a few cycles and also shows the phase-space trajectory $(x,\dot{x})$.
+\lstinputlisting[language=Scilab]{code/harmonic_oscillator.sce}
+
+	\subsection{Damping curves}
+		Given below are the analytic solutions for a linear damped oscillator with mass $m$, damping coefficient $c$ and stiffness $k$. Using $\gamma=\dfrac{c}{2m}$ and $\omega_0=\dfrac{k}{m}$, we have
+		\begin{itemize}
+			\item Underdamping: $\gamma<\omega_0$
+			\item Critical damping: $\gamma=\omega_0$
+			\item Overdamping: $\gamma>\omega_0$
+		\end{itemize}
+		The Scilab code below plots each of the above three cases for comparison.
+\lstinputlisting[language=Scilab]{code/damping.sce}
+
+	\subsection{Potential well profiles}
+		Some of the common 1D potential energy profiles used to visualise equilibrium points and barriers are:
+		\begin{enumerate}[a)]
+			\item Harmonic (quadratic) well $V(x)=\dfrac{1}{2}kx^2$
+			\item Finite square well of depth $V_0$ and width $w$
+			\item Symmetric double-well (quartic) potential $V(x)=ax^4-bx^2$
+		\end{enumerate}
+		The Scilab code below plots each of the above potential wells for comparison.
+\lstinputlisting[language=Scilab]{code/potential_well.sce}

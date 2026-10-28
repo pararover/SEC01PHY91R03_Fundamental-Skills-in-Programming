@@ -1,0 +1,59 @@
+\section{Creation of Scilab arrays}
+	Scilab uses a concise, readable syntax for building numeric arrays. A literal array is written between square brackets \verb|[...]|: spaces or commas separate entries in the same row, and a semicolon (\verb|;|) separates rows. Thus \verb|[1  2  3]| is a $1\times3$ row vector while \verb|[1;  2;  3]| is a $3\times1$ column vector.
+	
+	A $2\times2$ matrix is written as \verb|[a  b;  c  d]|. Whitespace and line breaks may be used to improve readability, but the bracketed structure determines the array shape.
+	\begin{multicols}{2}
+		\begin{verbatim}
+			--> r = [1  2  3]
+			r = [1x3 double]
+			1.   2.   3.
+			
+			--> c = [1;  2;  3]
+			c = [3x1 double]
+			1.
+			2.
+			3.
+			
+			--> m = [1  2; 3  4]
+			m = [2x2 double]
+			1.   2.
+			3.   4.
+			
+			--> X = [1,2,5; 6,8,9; -1,6,4]
+			X = [3x3 double]
+			1.   2.   5.
+			6.   8.   9.
+			-1.   6.   4.
+		\end{verbatim}
+	\end{multicols}
+	
+	\subsection{Special matrices}
+	For common array initialisations Scilab provides utility functions that are convenient and efficient: \verb|zeros(m,n)| and \verb|ones(m,n)| create $m\times n$ arrays filled with zeros or ones. The function \verb|eye(n)| builds the $n\times n$ identity matrix. Another Scilab function called \verb|linspace(a,b,n)| is useful for creating evenly spaced vectors. These functions are preferable to typing large arrays by hand and make code easier to read and maintain.
+	
+	\begin{multicols}{2}
+		\begin{verbatim}
+			--> zeros(2, 3)
+			ans = [2x3 double]
+			0.   0.   0.
+			0.   0.   0.
+			
+			
+			--> ones(3, 4)
+			ans = [3x4 double]
+			1.   1.   1.   1.
+			1.   1.   1.   1.
+			1.   1.   1.   1.
+			
+			--> eye(5,5)
+			ans = [5x5 double]
+			1.   0.   0.   0.   0.
+			0.   1.   0.   0.   0.
+			0.   0.   1.   0.   0.
+			0.   0.   0.   1.   0.
+			0.   0.   0.   0.   1.
+			
+			--> linspace(0, 1, 5)
+			ans = [1x5 double]
+			0.   0.25   0.5   0.75   1.
+		\end{verbatim}
+	\end{multicols}

@@ -1,0 +1,198 @@
+\section{Working with arrays}
+
+\subsection{Indexing and slicing}
+Indexing and slicing are the primary tools for accessing and manipulating parts of arrays. Scilab uses 1-based indexing and column-major storage; parentheses \verb|()| are used for indexing.
+
+\subsubsection{Basic indexing rules}
+\begin{enumerate}
+	\item Indices start at 1.
+	\item Use \verb|A(i,j)| to access the element in the i$^\text{th}$ row and j$^\text{th}$ column.
+	\item A single index \verb|A(k)| performs linear (column-wise) indexing into A (elements are counted down columns).
+	\item Attempting to index outside the array bounds raises an error -- check using the \verb|size()| function first.
+\end{enumerate}
+\begin{multicols}{3}
+	\begin{verbatim}
+		--> A = [1 6 9 2 -3];
+		
+		--> A(2)
+		ans = 
+		6.
+		
+		--> A(1)
+		ans = 
+		1.
+		
+		--> A(7)
+		Invalid index.
+		
+		--> size(A)
+		ans = [1x2 double]
+		1.   5.
+		
+		--> B = [4 7 9; 8 2 5; -6 3 1]
+		B = [3x3 double]
+		4.   7.   9.
+		8.   2.   5.
+		-6.   3.   1.
+		
+		--> B(1,3)
+		ans = 
+		9.
+		
+		--> B(3,2)
+		ans = 
+		3.
+		
+		--> B(4,5)
+		Invalid index.
+		
+		--> size(B)
+		ans = [1x2 double]
+		3.   3.
+	\end{verbatim}
+\end{multicols}
+
+\subsubsection{Basic slicing rules}
+\begin{enumerate}
+	\item Use \verb|:| to select an entire row or column.
+	\item Use \verb|start:end| to select a range of indices.
+	\item Use \verb|$| to refer to the last index.
+\end{enumerate}
+\begin{multicols}{2}
+	\begin{verbatim}
+		--> A = [1 2 -2 3; 4 -4 7 9; 0 -1 5 8]
+		A = [3x4 double]
+		1.   2.  -2.   3.
+		4.  -4.   7.   9.
+		0.  -1.   5.   8.
+		
+		--> A(2,:)
+		ans = [1x4 double]
+		4.  -4.   7.   9.
+		
+		--> A(:,3)
+		ans = [3x1 double]
+		-2.
+		7.
+		5.
+		
+		--> A(2:3,2:4)
+		ans = [2x3 double]
+		-4.   7.   9.
+		-1.   5.   8.
+		
+		--> A(:,2:3)
+		ans = [3x2 double]
+		2.  -2.
+		-4.   7.
+		-1.   5.
+		
+		--> A($,$)
+		ans = 
+		8.
+		
+		--> A($,:)
+		ans = [1x4 double]
+		0.  -1.   5.   8.
+		
+		--> A(:,$)
+		ans = [3x1 double]
+		3.
+		9.
+		8.
+	\end{verbatim}
+\end{multicols}
+
+\subsection{Reshaping arrays}
+Reshaping an array means changing its dimensions (number of rows and columns) without altering the data it contains. This is often useful when one needs to reinterpret data, prepare it for mathematical operations, or display it in a specific format. Scilab provides simple and efficient tools for reshaping arrays.
+
+The most common way to reshape an array in Scilab is by using the \verb|matrix()| function. Its general syntax is: \verb|B = matrix(A, m, n)|, where \verb|A| is the original array and \verb|m|, \verb|n| are the required number of rows and columns.
+\begin{multicols}{2}
+	\begin{verbatim}
+	--> A = [1 2 3 4 5 6 7 8 9]
+	A = [1x9 double]
+	1.  2.  3.  4.  5.  6.  7.  8.  9.
+		
+	--> matrix(A, 3, 3)
+	ans = [3x3 double]
+	1.   4.   7.
+	2.   5.   8.
+	3.   6.   9.
+		
+	--> B = matrix(A, 3, 3)
+	B = [3x3 double]
+	1.   4.   7.
+	2.   5.   8.
+	3.   6.   9.
+		
+	--> C = matrix(A, 1, 9)
+	C = [1x9 double]
+	1.  2.  3.  4.  5.  6.  7.  8.  9.
+	\end{verbatim}
+\end{multicols}
+
+The total number of elements must remain unchanged after reshaping, i.e. if $A$ has $p\times q$ elements, then $m\times n$ must equal $p\times q$. Attempting to reshape into an incompatible size will produce an error.
+
+\subsection{Concatenating arrays}
+Array concatenation refers to the process of joining two or more arrays to form a larger array. In Scilab, this can be done either horizontally (side by side) or vertically (one below another) using simple bracket notation. Concatenation is widely used for building matrices from smaller blocks, combining results, or assembling data from different sources.
+
+Scilab allows arrays to be concatenated using square brackets \verb|[ ]|.
+\begin{itemize}
+	\item Elements separated by spaces or commas (\verb|,|) within brackets are placed horizontally (same row).
+	\item Elements or arrays separated by semicolons (\verb|;|) are placed vertically (new rows).
+\end{itemize}
+\begin{multicols}{2}
+	\begin{verbatim}
+	--> A = [1 2 3]
+	A = [1x3 double]
+	1.   2.   3.
+		
+	--> B = [4 5 6]
+	B = [1x3 double]
+	4.   5.   6.
+		
+	--> C = [A; B]
+	C = [2x3 double]
+	1.   2.   3.
+	4.   5.   6.
+		
+	--> D = [A, B]
+	D = [1x6 double]
+	1.   2.   3.   4.   5.   6.
+	\end{verbatim}
+\end{multicols}
+
+\subsection{Size and length of arrays}
+The \verb|size()| function returns the size of the array along all the dimensions. If it is a vector, then it returns the number of elements; in case of a matrix, it returns the number rows and columns.
+
+The \verb|length()| function returns the total number of elements in an array, regardless of whether it is a vector or a matrix.
+\begin{multicols}{2}
+	\begin{verbatim}
+	--> A = [2  1; 5  7; 9  3]
+	A = [3x2 double]
+	2.   1.
+	5.   7.
+	9.   3.
+		
+	--> size(A)
+	ans = [1x2 double]
+	3.   2.
+		
+	--> length(A)
+	ans = 
+	6.
+		
+	--> B = [-4  8  9 -3;  1  7  2  -5]
+	B = [2x4 double]
+	-4.   8.   9.  -3.
+	1.   7.   2.  -5.
+		
+	--> size(B)
+	ans = [1x2 double]
+	2.   4.
+		
+	--> length(B)
+	ans = 
+	8.
+	\end{verbatim}
+\end{multicols}

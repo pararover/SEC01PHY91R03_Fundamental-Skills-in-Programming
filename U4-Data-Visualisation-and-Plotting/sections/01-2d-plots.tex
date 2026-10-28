@@ -1,0 +1,49 @@
+\section{Creating 2D plots}
+	Creating clear 2D plots is an essential skill for visualising numerical results and communicating patterns quickly; in Scilab this typically means preparing paired data vectors \code{x} and \code{y} of equal length and calling \code{plot(x,y)} to draw the curve. By default plot produces a simple line plot, but multiple curves may be drawn together by supplying additional \code{(x,y)} pairs in the same call, which keeps axes consistent and avoids unintentionally overwriting earlier curves.
+	
+	Good plots are annotated, i.e. we add an informative title and axis labels with \code{title}/\code{xtitle}, \code{xlabel} and \code{ylabel}, and identify multiple traces using \code{legend}. Enabling a \code{grid} (or \code{xgrid}) and choosing suitable line styles, markers and limits improves readability; finally, export figures to a suitable image or vector format for reports. These few steps -- data preparation, plotting, annotation and exporting -- form a practical workflow for most 2D visualisation tasks in Scilab.
+	
+	\subsection{Basic usage of the \code{plot()} function}
+		The \code{plot()} function is the fundamental command for drawing 2-D line plots in Scilab. It accepts paired \code{(x,y)} vectors (of equal length) and draws \code{y} versus \code{x}; passing multiple \code{(x,y)} pairs in one call draws several curves on the same axes.
+	
+	\subsubsection*{Plotting a single curve}
+		A single curve is produced by supplying two vectors \code{x} and \code{y} of the same length. We use this when we want a simple plot of one dependent variable against an independent variable.
+		
+		\textbf{Example:} \textit{Plotting a simple sine curve}
+		\begin{lstlisting}[language=Scilab]
+	x = 0:0.01:2*%pi;
+	y = sin(x);
+	plot(x, y);
+		\end{lstlisting}
+	
+	\subsubsection*{Plotting multiple curves on the same plot}
+		To draw several curves on the same axes, we pass additional \code{(x,y)} pairs to a single plot call (or the \code{plot()} function is called repeatedly while preserving the axes). Giving all pairs in one call is usually easiest and avoids creating extra figure windows.
+	
+		\textbf{Example:} \textit{Plotting sine and cosine curves on the same plot}
+		\begin{lstlisting}[language=Scilab]
+	x = 0:0.01:2*%pi;
+	y1 = sin(x);
+	y2 = cos(x);
+	plot(x, y1, x, y2);
+		\end{lstlisting}
+	
+	\subsection{Adding labels, title and legend to a plot}
+		Good plots communicate results clearly: axis labels, a descriptive title and a legend (when more than one curve appears) are essential. Scilab provides simple functions, such as \code{xlabel}, \code{ylabel}, \code{title} and \code{legend}, to add these annotations after drawing the plot.
+		
+		The general syntax for each of these functions are given below:
+		\begin{itemize}
+			\item \verb|xlabel('x-axis label');|
+			\item \verb|ylabel('y-axis label');|
+			\item \verb|title('Title of the plot');|
+			\item \verb|legend('label1', 'label2', ...);|
+		\end{itemize}
+
+		\textbf{Example:}
+		\begin{lstlisting}[language=Scilab]
+	x = 0:0.01:2*%pi;
+	plot(x, sin(x), x, cos(x));
+	title('Trigonometric functions');
+	xlabel('x (rad)');
+	ylabel('f(x)');
+	legend('f(x)=sin(x)','f(x)=cos(x)');
+		\end{lstlisting}

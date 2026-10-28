@@ -1,0 +1,83 @@
+\geometry{
+	left    = 2.5cm,
+	top     = 2cm,
+	right   = 1.5cm,
+	bottom  = 2cm,
+}
+
+\setlength{\parskip}{1.0em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RO,LE]{\topicAbbrev}
+\fancyhead[RE,LO]{\courseCode: \courseAbbrev}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\pagenumbering{arabic}
+
+\everymath{\displaystyle}
+
+\setlength{\parindent}{0pt}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+% \definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.85,0.85,0.95}
+\definecolor{framecardcolour}{rgb}{0.20,0.20,0.70}
+
+\lstdefinelanguage{Scilab}{
+	keywords={function, endfunction, if, then, else, end, for, while, break, continue, select, case, otherwise, return, global, local, clear, exec, load, save, disp, printf, error, warning},
+	comment=[l]{//},
+	comment=[s]{/*}{*/},
+	string=[b]{"},
+	morestring=[b]{'},
+	sensitive=false,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\color{green},
+	stringstyle=\color{red},
+	identifierstyle=\color{black}
+}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	% keywordstyle=\color{magenta},
+	% numberstyle=\tiny\color{codegray},
+	% stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\small,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+
+\lstdefinestyle{mystyleSansLineNum}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	% keywordstyle=\color{magenta},
+	% numberstyle=\tiny\color{codegray},
+	% stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\small,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	%numbers=left,
+	%numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+
+% \lstset{style=mystyle}
+\lstset{style=mystyleSansLineNum}

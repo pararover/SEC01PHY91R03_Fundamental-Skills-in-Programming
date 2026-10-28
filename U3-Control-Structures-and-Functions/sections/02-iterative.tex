@@ -1,0 +1,79 @@
+\section{Iterative loops}
+	Scilab provides \code{for} loops for counted iteration, i.e. they run over index ranges or explicit vectors and are ideal when the number of repetitions is known in advance. On the other hand, \code{while} loops repeat as long as a condition holds and are suited to tasks that stop on runtime criteria (for example convergence tests). The control statements \code{break} and \code{continue} let the program alter normal loop flow.
+	
+	\subsection{The \code{for} loop}
+		This iterative loop is used to repeat a block a known number of times or iterate over an index set or explicit vector.
+		
+		The general syntax of the \code{for} loop is as follows:
+		\begin{verbatim}
+	for i = start:step:end
+	// body using i
+	end
+	
+	// or iterate over a vector of values
+	for v = [1 3 5 7]
+	// body using v
+	end
+		\end{verbatim}
+		When using this iterative loop in Scilab, it is important to note the following:
+		\begin{itemize}
+			\item The \code{step} keyword is optional; if only \code{start:end} is mentioned then \code{step} is taken to be 1 by default.
+			\item It is possible to count down with a negative step, e.g. \code{10:-1:1}.
+			\item It is preferable to preallocate arrays (e.g. \code{A=zeros(1,N)}) before filling them inside a for loop to avoid costly dynamic resizing.
+		\end{itemize}
+		
+		\textbf{Example:} \textit{to compute the sum of first $N$ integers}
+		\begin{verbatim}
+	N = 10;
+	s = 0;
+	for k = 1:N
+	s = s + k;
+	end
+	disp(s);
+		\end{verbatim}
+		
+		\subsection{The \code{while} loop}
+		This iterative loop is used to repeat a block until a stopping condition is met. It is to be used when the number of iterations is not known in advance.
+		
+		The general syntax of the \code{while} loop is as follows:
+		\begin{verbatim}
+	while condition
+	// body
+	end
+		\end{verbatim}
+		When using this iterative loop in Scilab, it is important to note the following:
+		\begin{itemize}
+			\item We need to always ensure that the loop condition will eventually become false; otherwise the loop may run forever.
+			\item The \code{while} loop is natural for iterative numerical schemes (e.g. Newton-Raphson, fixed-point, iterative linear solvers), where a convergence check is performed.
+		\end{itemize}
+		
+		\textbf{Example:}
+		\begin{verbatim}
+	tol = 1e-8;
+	term = 1;
+	s = term;
+	k = 1;
+	while term > tol
+	term = term / k;   // update for 1/k!
+	s = s + term;
+	k = k + 1;
+	end
+	disp(s);
+		\end{verbatim}
+	
+	\subsection{Breaking and continuing}
+		In Scilab, the \code{break} and \code{continue} statements let a program alter the normal loop flow. A \code{break} statement causes an immediate exit from the nearest enclosing loop, after which execution resumes at the statement following that loop. A \code{continue} statement skips the remainder of the current iteration and proceeds to the next one (the loop index is advanced or the loop condition re-evaluated as appropriate). These constructs are handy for early exits (e.g. when a search succeeds) or skipping invalid items, but should be used sparingly, i.e. clear loop conditions and well-structured code are usually preferable.
+		
+		\textbf{Example:}
+		\begin{verbatim}
+	for k = 1:10
+	if k == 5 then
+	continue;   // skip printing 5
+	end
+	if k == 9 then
+	break;      // stop the loop at 9
+	end
+	disp(k);
+	end
+		\end{verbatim}
+		The above program is written to display the integers from \code{1} to \code{10}. The \code{continue} statement is executed when the integer \code{5} is reached, when it forces the program to ignore all code below and go into the next iteration, thereby avoiding \code{5} from being printed. When the integer \code{9} is reached, the \code{break} statement forces the program to exit from the loop, thereby displaying integers till \code{8}.

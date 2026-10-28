@@ -1,0 +1,38 @@
+\section{Conditional statements}
+	Conditionals allow a program to choose between different actions by evaluating boolean expressions and executing only the block whose test is true. Using \texttt{if}, \texttt{elseif} and \texttt{else} constructs, a program can implement multiple branches so that different inputs or situations lead to different behaviour. They are widely used for input validation, error handling and implementing branching algorithms, making code more flexible and robust.
+	
+	\subsection{The \code{if-elseif-else} statement}
+		The \code{if-else} construct executes a block of code when a condition is true and another block when it is false. Furthermore, the \code{elseif} construct provides additional branches. We use this whenever the program must choose between alternatives.
+		
+		The general syntax of the \code{if-elseif-else} statement is as follows:
+	\begin{verbatim}
+	if condition then
+	// statements executed when condition is true
+	elseif other_condition then
+	// statements when other_condition is true
+	else
+	// statements when none of the above conditions hold
+	end
+		\end{verbatim}
+	
+		When using this conditional statement in Scilab, it is important to note the following:
+		\begin{itemize}
+			\item The keyword \code{then} is required after the condition.
+			\item The \code{if-elseif-else} block must be closed by the keyword \code{end}.
+			\item Conditions must evaluate to a scalar logical value.
+			\item Use \code{==} for equality and \verb|~=| for inequality.
+			\item Other comparison operators are \code{>}, \code{<}, \code{>=}, \code{<=}.
+			\item Logical operators include \code{\&} (AND) and \code{|} (OR).
+		\end{itemize}
+		
+		\textbf{Example:} \textit{to determine whether a given number is positive or negative or zero}
+		\begin{verbatim}
+	a = input("Enter a number: ");
+	if a > 0 then
+	disp("Positive");
+	elseif a < 0 then
+	disp("Negative");
+	else
+	disp("Zero");
+	end
+		\end{verbatim}

@@ -1,0 +1,14 @@
+\section{Basics of 3D plotting}
+	3-D plotting lets us visualise surfaces, meshes and space curves so that structure in two-variable data or parametric trajectories is immediately visible.
+	
+	\textbf{Example:} \textit{A simple sinc surface}\\
+	This example builds a regular \code{(x,y)} grid, evaluates a smooth surface $Z=\dfrac{\sin r}{r}$ (with $Z=1$ at $r=0$), and displays it with axis labels and a grid.
+	\begin{lstlisting}[language=Scilab]
+	x = -5.0:0.25:5.0;
+	y = -5.0:0.25:5.0;
+	[X, Y] = meshgrid(x, y);
+	R = sqrt(X.^2 + Y.^2);
+	Z = sin(R) ./ R;
+	Z(R==0) = 1;
+	plot3d(x, y, Z);
+	\end{lstlisting}
